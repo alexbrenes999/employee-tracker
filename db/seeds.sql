@@ -1,9 +1,11 @@
+-- All the departments
 INSERT INTO department (name)
 VALUES  ('Sales'),
         ('Engineering'),
         ('Finance'),
         ('Legal');
 
+-- All of the roles and their respective salaries as well as their corresponding departments
 INSERT INTO role (title, salary, department_id)
 VALUES  ('Sales Lead', 100000, 1),
         ('Salesperson', 80000, 1),
@@ -14,6 +16,7 @@ VALUES  ('Sales Lead', 100000, 1),
         ('Legal Team Lead', 250000, 4),
         ('Lawyer', 190000, 4);
 
+-- All of the employees and their roles as well as their manager
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES  ('Alex', 'Brehknees', 1, NULL),
         ('Charles', 'West', 2, 1),

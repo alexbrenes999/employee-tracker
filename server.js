@@ -1,4 +1,4 @@
-//Dependencies 
+//setting dependencies 
 const inquirer = require('inquirer');22222
 const mysql = require('mysql2');
 const tableFormat = require('console.table');
@@ -10,36 +10,37 @@ const db = mysql.createConnection({
   password: 'Tyra6310@',
   database: 'employees_db'
 });
-
+// connecting the database
 db.connect((err) => {
   if (err) throw err;
   console.log(`Connected to the employees_db database.`)
   console.log(`Select an option from below to get started`);
 
-  startMenu();
+  homeScreen();
 });
 
 
 //Start menu displayed when the program start
-const startMenu = async () => {
+const homeScreen = async () => {
   const result = await inquirer
     .prompt({
       type: 'list',
-      name: 'startMenuSelection',
-      message: 'What would you like to do?',
+      name: 'homeScreenSelection',
+      message: 'Welcome! Choose your action below.',
       choices: [
-        "View all Departments",
-        "View all Roles",
-        "View all Employees",
-        "Add a Department",
-        "Add a Role",
-        "Add an Employee",
-        "Update an Employee's role",
-        "Exit"
+        "View your departments",
+        "View your roles",
+        "View all employees",
+        "Add a department",
+        "Add a role",
+        "Add an employee",
+        "Update employee's role",
+        "Quit"
       ]
     })
+    // 
     .then((result) => {
-      switch (result.startMenuSelection) {
+      switch (result.homeScreenSelection) {
         case 'View all Departments':
           viewDepartments();
           break;
@@ -79,13 +80,13 @@ const startMenu = async () => {
 }
 
 
-//Functions that handle the start menu options
+// function allows
 const viewDepartments = () => {
   const sql = 'SELECT * FROM department';
   db.query(sql, (err, res) => {
     if (err) throw err;
     console.table(res);
-    startMenu();
+    homeScreen();
   })
 }
 
@@ -94,7 +95,7 @@ const viewRoles = () => {
   db.query(sql, (err, res) => {
     if (err) throw err;
     console.table(res);
-    startMenu();
+    homeScreen();
   })
 }
 
@@ -103,7 +104,7 @@ const viewEmployees = () => {
   db.query(sql, (err, res) => {
     if (err) throw err;
     console.table(res);
-    startMenu();
+    homeScreen();
   })
 }
 
@@ -118,11 +119,11 @@ const addDepartment = async () => {
       db.query('INSERT INTO department (name) Values (?)', [result.depName], (err, res) => {
         if (err) throw err;
         console.table(res);
-        startMenu();
+        homeScreen();
       });
     });
 
-  startMenu();
+  homeScreen();
 }
 
 const addRole = async () => {
@@ -150,7 +151,7 @@ const addRole = async () => {
         console.table(res);
       });
     });
-  startMenu();
+  homeScreen();
 }
 
 const addEmployee = async () => {
@@ -183,7 +184,7 @@ const addEmployee = async () => {
         console.table(res);
       });
     })
-  startMenu();
+  homeScreen();
 }
 
 const updateEmployee = async (employeeId) => {
@@ -205,7 +206,7 @@ const updateEmployee = async (employeeId) => {
         console.table(res);
       });
     })
-  startMenu();
+  homeScreen();
 }
 
 const quit = () => {
